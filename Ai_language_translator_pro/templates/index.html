@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Language Translator Pro</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<h1>
+
+<i class="fa-solid fa-language"></i>
+
+AI Language Translator Pro
+
+</h1>
+
+<form
+method="POST"
+id="translatorForm"
+enctype="multipart/form-data">
+
+<div class="translator-grid">
+
+<!-- INPUT PANEL -->
+
+<div class="panel">
+
+<h2>
+
+<i class="fa-solid fa-keyboard"></i>
+
+Input
+
+</h2>
+
+<textarea
+
+id="inputText"
+
+name="text"
+
+placeholder="Type your text here...">{% if request.form.text %}{{ request.form.text }}{% endif %}</textarea>
+
+<div class="char-counter">
+
+<span id="charCount">0 Characters</span>
+
+</div>
+
+<div class="file-upload">
+
+<label>
+
+<i class="fa-solid fa-file-arrow-up"></i>
+
+Upload File
+
+</label>
+
+<input
+type="file"
+id="file"
+name="file"
+accept=".txt,.pdf,.docx">
+
+</div>
+<div class="panel-buttons">
+
+<button
+type="button"
+id="voiceInput">
+
+<i class="fa-solid fa-microphone"></i>
+
+Voice
+
+</button>
+
+<button
+type="button"
+id="clearBtn">
+
+<i class="fa-solid fa-trash"></i>
+
+Clear
+
+</button>
+
+</div>
+
+</div>
+
+<!-- MIDDLE SECTION -->
+
+<div class="middle-panel">
+
+<div class="language-box">
+
+<label>From</label>
+
+<select id="source" name="source">
+
+<option value="auto">
+Detect Language
+</option>
+
+{% for code,name in languages.items() %}
+
+<option value="{{ code }}">
+
+{{ name.title() }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<button
+type="button"
+id="swap">
+
+<i class="fa-solid fa-right-left"></i>
+
+</button>
+
+<div class="language-box">
+
+<label>To</label>
+
+<select id="target" name="target">
+
+{% for code,name in languages.items() %}
+
+<option
+value="{{ code }}"
+{% if code=="en" %}
+selected
+{% endif %}>
+
+{{ name.title() }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+</div>
+<!-- OUTPUT PANEL -->
+
+<div class="panel">
+
+<h2>
+
+<i class="fa-solid fa-language"></i>
+
+Translated Text
+
+</h2>
+
+<div id="loading" class="loading">
+
+Translating...
+
+</div>
+
+<div
+class="output-box"
+id="output">
+
+{% if translated_text %}
+
+{{ translated_text }}
+
+{% else %}
+
+Your translation will appear here...
+
+{% endif %}
+
+</div>
+
+<div class="panel-buttons">
+
+<button type="button" id="copyBtn">
+
+<i class="fa-solid fa-copy"></i>
+
+Copy
+
+</button>
+
+<button type="button" id="speakBtn">
+
+<i class="fa-solid fa-volume-high"></i>
+
+Speak
+
+</button>
+<button type="button" id="stopSpeakBtn">
+    <i class="fa-solid fa-stop"></i>
+    Stop
+</button>
+
+<button type="button" id="downloadBtn">
+
+<i class="fa-solid fa-download"></i>
+
+Download
+
+</button>
+<button type="button" id="clearOutputBtn">
+    
+    <i class="fa-solid fa-trash"></i>
+    Clear Translation
+    </button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="translate-section">
+
+<button
+type="submit"
+class="translate-btn">
+
+<i class="fa-solid fa-language"></i>
+
+Translate Now
+
+</button>
+
+</div>
+<!-- Translation History -->
+
+<div class="history-section">
+
+    <h2>
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Recent Translations
+
+    </h2>
+
+    <div id="historyList">
+
+        <p class="empty-history">
+
+            No translations yet.
+
+        </p>
+
+    </div>
+
+</div>
+
+</form>
+
+<footer>
+
+    <p>
+
+        © 2026 AI Language Translator Pro |
+        Developed with ❤️ using Flask & Python
+               (C P Rajawat )
+
+    </p>
+
+</footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
